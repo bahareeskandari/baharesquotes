@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react'
+import './App.css'
+import Button from './components/button/Button'
+import Card from './components/card/Card'
+import Favorites from './components/favorites/Favorites'
 
 function App() {
+  const [quote, setQuote] = useState('')
+  const [quotesArray, setQuotesArray] = useState([])
+  const generate = () => {
+    window
+      .fetch('https://baharesfood.herokuapp.com/api/randomquotegenerator')
+      .then((res) => res.json())
+      .then((r) => setQuote(r))
+      .catch((err) => console.log(err))
+  }
+  const saveFavorite = (quote) => {
+    if (quotesArray.includes(quote)) {
+      return null
+    } else {
+      setQuotesArray([quote, ...quotesArray])
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Button generate={generate} />
+        <Card saveFavorite={saveFavorite} quote={quote} />
+        <Favorites quotesArray={quotesArray} />
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

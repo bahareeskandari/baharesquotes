@@ -1,0 +1,52 @@
+/* buttons */
+.middle {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+@media only screen and (max-width: 600px) {
+  .middle {
+    position: absolute;
+    top: 10%;
+  }
+}
+.btn {
+  background: none;
+  border: 2px solid #000;
+  font-family: 'montserrat', sans-serif;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  min-width: 280px;
+  margin: 20px;
+  cursor: pointer;
+
+  /*The stuff below here does the fancy text fade in-out animation */
+  transition: color 0.4s linear;
+  position: relative;
+}
+
+.btn:hover {
+  color: #fff;
+}
+/* The stuff below here does the bouncy color animation */
+.btn::before {
+  content: 'Generate new ';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 69%;
+  height: 100%;
+  background: #000;
+  z-index: -1;
+
+  transition: transform 0.5s;
+  transform-origin: 0 0;
+  transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
+  transform: scaleX(0);
+}
+
+.btn:hover::before {
+  transform: scaleX(1);
+}
