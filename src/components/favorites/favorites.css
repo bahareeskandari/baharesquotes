@@ -5,14 +5,28 @@
   padding: 20px;
   margin: 20px;
   margin: 40px 40px;
+  transition: transform 1s;
 }
 
 .myShadowBox {
   border-radius: 2px;
   padding: 20px;
-  box-shadow: 2px 2px 4px black;
+  box-shadow: 2px 2px 147px black;
+  transition: transform 1s;
 }
-li {
-  list-style: none;
-  font-size: small;
+
+.h4 {
+  letter-spacing: 4px;
+}
+.text {
+  width: 400px;
+  font-size: 14px;
+  text-align: left;
+  border-radius: 0.25rem;
+  box-shadow: 2px 2px 3px 2px rgb(75, 75, 75);
+  padding: 15px;
+  transition: transform 1s;
+}
+.text span {
+  display: block;
 }

@@ -3,21 +3,39 @@ import './App.css'
 import Button from './components/button/Button'
 import Card from './components/card/Card'
 import Favorites from './components/favorites/Favorites'
+import {
+  fetchQuotesFromExternalApi,
+  fetchApiFromPostGreSQL,
+  saveQuoteToDatabase,
+  deleteQuoteFromDataBase,
+} from './handlers/apiFetches'
 
 function App() {
   const [quote, setQuote] = useState('')
   const [quotesArray, setQuotesArray] = useState([])
-  const generate = () => {
-    window
-      .fetch('https://baharesfood.herokuapp.com/api/randomquotegenerator')
-      .then((res) => res.json())
-      .then((r) => setQuote(r))
-      .catch((err) => console.log(err))
+
+  useEffect(() => {
+    fetchApiFromPostGreSQL().then((data) => {
+      setQuotesArray(data)
+    })
+  }, [quotesArray])
+
+  const generateNewQuote = async () => {
+    fetchQuotesFromExternalApi().then((r) =>
+      setQuote({author: r.originator.name, content: r.content})
+    )
   }
+
+  const deleteQuote = (quote) => {
+    deleteQuoteFromDataBase(quote)
+  }
+
   const saveFavorite = (quote) => {
-    if (quotesArray.includes(quote)) {
+    const found = quotesArray.some((item) => item.content === quote.content) // if the frontend already has that quote
+    if (found) {
       return null
     } else {
+      saveQuoteToDatabase(quote)
       setQuotesArray([quote, ...quotesArray])
     }
   }
@@ -25,9 +43,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Button generate={generate} />
+        <Button generateNewQuote={generateNewQuote} />
         <Card saveFavorite={saveFavorite} quote={quote} />
-        <Favorites quotesArray={quotesArray} />
+        <Favorites quotesArray={quotesArray} deleteQuote={deleteQuote} />
       </header>
     </div>
   )

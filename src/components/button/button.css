@@ -1,7 +1,7 @@
 /* buttons */
 .middle {
   position: absolute;
-  top: 8%;
+  top: 18%;
   left: 50%;
   text-align: center;
   transform: translate(-50%, -50%);
@@ -49,4 +49,7 @@
 
 .btn:hover::before {
   transform: scaleX(1);
+}
+.simpleTEXT {
+  font-size: 13px;
 }
